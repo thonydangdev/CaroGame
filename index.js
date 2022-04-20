@@ -10,14 +10,17 @@ const settingBtn = $('.btn-setting')
 const acceptSettingBtn = $('.complete-setting')
 const spaceBox = $('.play-box .box')
 const header = $('.header')
+const btnNextRound = $('.btn-nextRound')
+const messageEnd = $('.message-end span')
 let abcColIndex = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 let numbox;
 let tickWin;
 let numset;
 let roundCurrent = 1;
-const positionX = []
-const positionO = []
+let positionX = []
+let positionO = []
 let hasWinner = false;
+let theWinner;
 let positionCurrent;
 //Rendering
 formSetting.addEventListener('submit', function (e) {
@@ -54,6 +57,17 @@ formSetting.addEventListener('submit', function (e) {
 settingBtn.addEventListener('click', () => {
     confirm('Are you sure want to setting again? The last setting will be reset') ? app.classList.remove('playing') : false
 })
+btnNextRound.addEventListener('click', () => {
+    roundCurrent++
+    round.innerText = roundCurrent
+    spaceBox.classList.remove('done')
+    hasWinner = false;
+    positionX = []
+    positionO = []
+    positionCurrent = ''
+    rendering(numbox, tickWin)
+})
+
 
 function rendering(numbox, tickWin) {
     spaceBox.innerHTML = ''
@@ -158,7 +172,47 @@ function checkWinner(positionCurrent, playertick, selector) {
     let checkStreakWin = checkHorizontal?.streakWin || checkVertical?.streakWin || checkDiagonal1?.streakWin || checkDiagonal2?.streakWin
     if (checkHorizontal.hasWin || checkVertical.hasWin || checkDiagonal1.hasWin || checkDiagonal2.hasWin) {
         alert(`${selector} winner`)
-        console.log(checkStreakWin)
+        if (selector === 'tickplaying-X') {
+            goalX.innerText = +goalX.innerText + 1
+        }
+        if (selector === 'tickplaying-O') {
+            goalO.innerText = +goalO.innerText + 1
+        }
+        if (+goalX.innerText === +goalO.innerText) {
+            goalO.style.color = '#000'
+            goalX.style.color = '#000'
+
+        } else if (+goalX.innerText > +goalO.innerText) {
+            goalX.style.color = 'rgba(9, 9, 121, 1)'
+            goalO.style.color = '#000'
+        } else {
+            goalO.style.color = 'rgba(253, 29, 29, 1)'
+            goalX.style.color = '#000'
+        }
+        if (roundCurrent == numset) {
+            spaceBox.classList.add('endstate')
+            if (+goalX.innerText === +goalO.innerText) {
+                messageEnd.innerText = 'This game is draw'
+            } else if (+goalX.innerText > +goalO.innerText) {
+                messageEnd.innerText = 'The winner is X'
+            } else {
+                messageEnd.innerText = 'The winner is O'
+
+            }
+
+        } else {
+            spaceBox.classList.add('done')
+        }
+
+        const divBoxItems = document.querySelectorAll('div.box-item')
+        checkStreakWin.forEach(item => {
+            divBoxItems.forEach(boxitem => {
+                if (boxitem.classList.contains(item)) {
+                    boxitem.classList.add('highlight')
+                }
+            })
+        })
+
         hasWinner = true;
     }
 
@@ -199,13 +253,12 @@ function checkValid(check, tick, style = "none") {
         }
     })
     let streakWinFinal = streakWin.map(item => validTick[item.index])
-    let streakWinFinals
     if (streakWin.length > tickWin) {
         posCurInStreakWin = streakWinFinal.indexOf(positionCurrent)
-        streakWinFinals = streakWinFinal.slice(posCurInStreakWin - ((tickWin - 1) / 2), posCurInStreakWin + 1 + ((tickWin - 1) / 2))
+        streakWinFinal = streakWinFinal.slice(posCurInStreakWin - ((tickWin - 1) / 2), posCurInStreakWin + 1 + ((tickWin - 1) / 2))
     }
     result.hasWin = validStreakArray >= tickWin
-    streakWin.length < tickWin ? false : result.streakWin = streakWinFinals
+    streakWin.length < tickWin ? false : result.streakWin = streakWinFinal
     return result
 
 

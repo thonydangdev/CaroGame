@@ -200,6 +200,24 @@ body {
     }
 }
 
+.message-end {
+    transform: scale(0);
+    position: absolute;
+    z-index: 5;
+    width: 60%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    font-size: 1.6rem;
+    font-weight: 500;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 30%);
+    color: yellow;
+    transition: 0.3s;
+    opacity: 0;
+}
+
 .play-box {
     display: flex;
     align-items: center;
@@ -210,6 +228,8 @@ body {
 
 
     & .box {
+
+        &.endstate,
         &.done {
             &::after {
                 content: "";
@@ -221,7 +241,20 @@ body {
                 z-index: 3;
                 background-color: rgba(0, 0, 0, 0.2);
             }
+        }
 
+        &.endstate {
+            &~.message-end {
+                transform: scale(1);
+                opacity: 1;
+
+            }
+        }
+
+        &.done {
+            &~.btn-nextRound {
+                transform: scale(1) translateY(100%);
+            }
         }
 
         display: grid;
@@ -251,6 +284,14 @@ body {
             height: 100%;
             border: 0.1rem solid #000;
             position: relative;
+
+            &.highlight {
+                background-color: #000;
+
+                & i.icon {
+                    color: yellow;
+                }
+            }
 
             &.tick:hover {
                 cursor: no-drop;
@@ -292,6 +333,32 @@ body {
     }
 
 
+}
+
+.btn-nextRound {
+    transform: scale(0) translateY(100%);
+    border: 1px solid #fff;
+    font-size: 1.6rem;
+    color: #fff;
+    background: rgb(9, 9, 121);
+    background: linear-gradient(90deg, rgba(9, 9, 121, 1) 0%, rgba(253, 29, 29, 1) 100%);
+    border-radius: 0.5rem;
+    position: absolute;
+    transition: 0.3s;
+    z-index: 5;
+    padding: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    bottom: 0;
+
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    &:active {
+        opacity: 0.4;
+    }
 }
 
 .settingBox {
