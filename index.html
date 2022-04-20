@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaroGame</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./fonts/fontawesome-free-5.15.4-web/css/all.min.css">
+    <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="settingBox">
+            <form action="" id="setting-modal">
+                <h2>Settings</h2>
+                <article class="form-item setBox">
+                    <label for="numbox">Space(nxn):</label>
+                    <input type="number" id="numbox" min="15" max="20" value="15" step="1">
+                </article>
+                <article class="form-item setRound">
+                    <label for="numset">Rounds:</label>
+                    <input type="number" id="numset" min="3" max="10" value="3" step="1">
+                </article>
+                <article class="form-item setRound">
+                    <label for="numtickWin">Liên tiếp:</label>
+                    <input type="number" id="numtickWin" min="3" max="5" value="3" step="1">
+                </article>
+
+                <article class="form-item setFP">
+                    <label style="display: inline-block;">First play:</label>
+                    <label for="O-player-choose" style="color:#fd1d1d">O</label>
+                    <input type="radio" id="O-player-choose" name="first__player" value="O__player" checked>
+                    <label for="X-player-choose" style="color:#090979">X</label>
+                    <input type="radio" id="X-player-choose" name="first__player" value="X__player">
+                    <button class="btn btn-random-player">Random</button>
+                </article>
+
+
+                <button class="btn complete-setting">Accept</button>
+
+
+            </form>
+        </div>
+
+        <div class="grid wide play-box">
+            <header class="header">
+                <div class="grid wide player-info">
+                    <div class="row no-gutters">
+                        <div class="col c-4 player-info-item X-player">
+                            <div class="player-info-img"><i class="fas fa-times"></i></div>
+                            <div class="player-info-name">Dang</div>
+                        </div>
+                        <div class="col c-4 spacegoalset">
+                            <span class="spacegoalset-item goalX">0</span>
+                            <div class="spacegoalset-item dodge"></div>
+                            <span class="spacegoalset-item goalO">0</span>
+                            <button class="btn btn-setting">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <div class="round"> Round <span class="roundnum">1</span> </div>
+
+                        </div>
+                        <div class="col c-4 player-info-item O-player">
+                            <div class="player-info-name">Thong</div>
+                            <div class="player-info-img"><i class="far fa-circle"></i></div>
+                        </div>
+                    </div>
+
+                </div>
+            </header>
+            <div class="box">
+            </div>
+
+
+
+        </div>
+    </div>
+    <script src="./index.js"></script>
+
+</body>
+
+</html>
