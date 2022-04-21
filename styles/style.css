@@ -890,8 +890,8 @@ body {
   opacity: 1;
   transform-origin: center center;
   transition: 0.2s linear;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   background-color: #fff;
   border-radius: 1rem;
   padding: 2rem;
@@ -928,13 +928,32 @@ body {
 .settingBox form article {
   height: 5rem;
 }
-.settingBox form article:nth-child(2) input, .settingBox form article:nth-child(3) input {
+.settingBox form article input[type=number], .settingBox form article input[type=text] {
+  height: 100%;
+  font-size: 2.6rem;
+  padding: 1rem;
+  text-align: center;
+}
+.settingBox form article input[type=text] {
+  font-size: 1.6rem;
+  width: 50%;
+}
+.settingBox form article:nth-child(2) input, .settingBox form article:nth-child(3) input, .settingBox form article:nth-child(4) input {
   flex: 1;
 }
-.settingBox form article:nth-child(4) {
+.settingBox form article:nth-child(2) label:first-child, .settingBox form article:nth-child(3) label:first-child, .settingBox form article:nth-child(4) label:first-child {
+  width: 45%;
+}
+.settingBox form article:nth-child(5) {
   justify-content: space-between;
 }
-.settingBox form article label:first-child {
+.settingBox form article:nth-child(5) input {
+  width: 30%;
+}
+.settingBox form article:nth-child(6) {
+  justify-content: space-between;
+}
+.settingBox form article:nth-child(6) label:first-child {
   width: 45%;
 }
 .settingBox form label {

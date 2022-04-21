@@ -28,13 +28,19 @@
                     <label for="numtickWin">Liên tiếp:</label>
                     <input type="number" id="numtickWin" min="3" max="5" value="3" step="1">
                 </article>
+                <article class="form-item setNamePlayer">
+                    <label for="playerX">Name X</label>
+                    <input type="text" id="playerX" placeholder="Name X" maxlength="10" required>
+                    <label for="playerO">Name O</label>
+                    <input type="text" id="playerO" placeholder="Name O" maxlength="10" required>
+                </article>
 
                 <article class="form-item setFP">
                     <label style="display: inline-block;">First play:</label>
-                    <label for="O-player-choose" style="color:#fd1d1d">O</label>
-                    <input type="radio" id="O-player-choose" name="first__player" value="O__player" checked>
                     <label for="X-player-choose" style="color:#090979">X</label>
                     <input type="radio" id="X-player-choose" name="first__player" value="X__player">
+                    <label for="O-player-choose" style="color:#fd1d1d">O</label>
+                    <input type="radio" id="O-player-choose" name="first__player" value="O__player">
                     <button class="btn btn-random-player">Random</button>
                 </article>
 

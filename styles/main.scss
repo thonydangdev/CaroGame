@@ -380,8 +380,8 @@ body {
         opacity: 1;
         transform-origin: center center;
         transition: 0.2s linear;
-        width: 300px;
-        height: 300px;
+        width: 400px;
+        height: 400px;
         background-color: #fff;
         border-radius: 1rem;
         padding: 2rem;
@@ -424,22 +424,48 @@ body {
         & article {
             height: 5rem;
 
+            & input[type=number],
+            & input[type=text] {
+                height: 100%;
+                font-size: 2.6rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            & input[type=text] {
+                font-size: 1.6rem;
+                width: 50%;
+            }
+
             &:nth-child(2),
-            &:nth-child(3) {
+            &:nth-child(3),
+            &:nth-child(4) {
                 & input {
                     flex: 1;
                 }
+
+                & label:first-child {
+                    width: 45%;
+                }
             }
 
-            &:nth-child(4) {
+            &:nth-child(5) {
+                justify-content: space-between;
+
+                & input {
+                    width: 30%;
+                }
+            }
+
+            &:nth-child(6) {
+                & label:first-child {
+                    width: 45%;
+                }
+
                 justify-content: space-between;
             }
 
 
-
-            & label:first-child {
-                width: 45%;
-            }
         }
 
         & label {

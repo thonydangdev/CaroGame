@@ -12,6 +12,8 @@ const spaceBox = $('.play-box .box')
 const header = $('.header')
 const btnNextRound = $('.btn-nextRound')
 const messageEnd = $('.message-end span')
+const goalOName = document.querySelector('.O-player .player-info-name')
+const goalXName = document.querySelector('.X-player .player-info-name')
 let abcColIndex = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 let numbox;
 let tickWin;
@@ -27,7 +29,7 @@ formSetting.addEventListener('submit', function (e) {
     e.preventDefault()
     const formValue = Array.from(this.elements).reduce((value, element) => {
         if (element.localName === 'input') {
-            if (element.id === 'numbox' || element.id === 'numset' || element.id === 'numtickWin') {
+            if (element.id === 'numbox' || element.id === 'numset' || element.id === 'numtickWin' || element.id === 'playerX' || element.id === 'playerO') {
                 value[element.id] = element.value
             } else {
                 element.checked === true ? value['first__player'] = element.id : null
@@ -41,6 +43,8 @@ formSetting.addEventListener('submit', function (e) {
         numset = formValue.numset
         numbox = formValue.numbox
         tickWin = formValue.numtickWin
+        goalOName.innerText = formValue.playerO
+        goalXName.innerText = formValue.playerX
 
         spaceBox.classList.add(`playing-${formValue.first__player[0]}`)
         app.classList.add('playing')
@@ -53,9 +57,34 @@ formSetting.addEventListener('submit', function (e) {
 
 
 })
+randomPlayerBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    let players = Array.from(formSetting.elements.first__player)
+    const playerRandom = setInterval(() => {
+        players[Math.floor(Math.random() * players.length)].click()
+    }, 100)
+    setTimeout(() => {
+        clearInterval(playerRandom)
+    }, 2000)
+})
 //Open Setting
 settingBtn.addEventListener('click', () => {
-    confirm('Are you sure want to setting again? The last setting will be reset') ? app.classList.remove('playing') : false
+    if (confirm('Are you sure want to setting again? The last setting will be reset')) {
+        app.classList.remove('playing')
+        spaceBox.classList.remove('done')
+        spaceBox.classList.remove('endstate')
+        goalO.innerText = 0
+        goalX.innerText = 0
+        checkGoal()
+        roundCurrent = 1;
+        round.innerText = roundCurrent
+        hasWinner = false;
+        positionX = []
+        positionO = []
+        positionCurrent = ''
+    }
+    // confirm('Are you sure want to setting again? The last setting will be reset') ? app.classList.remove('playing') : false
+
 })
 btnNextRound.addEventListener('click', () => {
     roundCurrent++
@@ -133,7 +162,19 @@ function rendering(numbox, tickWin) {
 
     }
 }
+function checkGoal() {
+    if (+goalX.innerText === +goalO.innerText) {
+        goalO.style.color = '#000'
+        goalX.style.color = '#000'
 
+    } else if (+goalX.innerText > +goalO.innerText) {
+        goalX.style.color = 'rgba(9, 9, 121, 1)'
+        goalO.style.color = '#000'
+    } else {
+        goalO.style.color = 'rgba(253, 29, 29, 1)'
+        goalX.style.color = '#000'
+    }
+}
 function checkWinner(positionCurrent, playertick, selector) {
 
     let numrowCurrent = +positionCurrent.slice(0, positionCurrent.length - 1)
@@ -171,33 +212,25 @@ function checkWinner(positionCurrent, playertick, selector) {
     let checkDiagonal2 = checkValid(dia2ItemsMustCheck, playertick)
     let checkStreakWin = checkHorizontal?.streakWin || checkVertical?.streakWin || checkDiagonal1?.streakWin || checkDiagonal2?.streakWin
     if (checkHorizontal.hasWin || checkVertical.hasWin || checkDiagonal1.hasWin || checkDiagonal2.hasWin) {
-        alert(`${selector} winner`)
+        alert(`${selector === 'tickplaying-O' ? goalOName.innerText : goalXName.innerText} winner in the round`)
         if (selector === 'tickplaying-X') {
             goalX.innerText = +goalX.innerText + 1
         }
         if (selector === 'tickplaying-O') {
             goalO.innerText = +goalO.innerText + 1
         }
-        if (+goalX.innerText === +goalO.innerText) {
-            goalO.style.color = '#000'
-            goalX.style.color = '#000'
+        checkGoal()
 
-        } else if (+goalX.innerText > +goalO.innerText) {
-            goalX.style.color = 'rgba(9, 9, 121, 1)'
-            goalO.style.color = '#000'
-        } else {
-            goalO.style.color = 'rgba(253, 29, 29, 1)'
-            goalX.style.color = '#000'
-        }
         if (roundCurrent == numset) {
             spaceBox.classList.add('endstate')
             if (+goalX.innerText === +goalO.innerText) {
                 messageEnd.innerText = 'This game is draw'
             } else if (+goalX.innerText > +goalO.innerText) {
-                messageEnd.innerText = 'The winner is X'
+                const nameX = goalXName.innerText
+                messageEnd.innerText = `The winner is ${nameX} `
             } else {
-                messageEnd.innerText = 'The winner is O'
-
+                const nameO = goalOName.innerText
+                messageEnd.innerText = `The winner is ${nameO} `
             }
 
         } else {
