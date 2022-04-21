@@ -473,17 +473,28 @@ body {
             font-weight: 500;
         }
 
-
-
-        & input {}
-
-
-
-
-
         & .form-item {
             display: flex;
             align-items: center;
         }
+    }
+}
+
+.message {
+    display: none;
+    font-size: 2.6rem;
+    padding: 1.6rem;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+}
+
+@media (max-width: 599px) {
+    .app {
+        display: none;
+    }
+
+    .message {
+        display: block;
     }
 }
